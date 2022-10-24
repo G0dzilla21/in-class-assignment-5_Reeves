@@ -22,21 +22,45 @@ The steps of the algorithm are as follows:
 
 The base cases occur when the sublists are either empty or have one element, as these are inherently sorted. 
  '''
+import re
+    # ^ will help to pull out integer values from our numbers file
 
+def quicksort(sequence):
+    length = len(sequence)
+    if length <= 1:
+        return sequence
+    else:
+        pivot = sequence.pop()
 
-def quicksort(numbers_in_a_list):
+    items_greater = []
+    items_lower = []
 
-#WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION
+    for item in sequence:
+        if item > pivot:
+            items_greater.append(item)
 
-    return #WHAT DOES IT RETURN?
+        else:
+            items_lower.append(item)
+
+    return quicksort(items_lower) + [pivot] + quicksort(items_greater)
 
 
 def main():
-
-# WRITE YOUR MAIN FUNCTION HERE TO READ IN YOUR numbers.txt FILE, RUN THE LIST THROUGH YOUR SORTING ALGORITHM, 
-# AND WRITE OUT YOUR FILE
-
-    return #WHAT DOES IT RETURN?
+    
+    file = open('numbers.txt', 'r')
+    file = file.read()
+    numbers = re.findall(r"[-+]?\d*\.\d+|\d+", file)
+        # ^ this should scan for all the integers in the file and save to a list
+   
+    sorted_array = quicksort(numbers)
+        # ^ sorts the array of numbers in a list
+    list_output = ', '.join(map(str,sorted_array))
+        # ^ turns the list back into a string to write to new file
+    newfile = 'sorted.txt'
+    with open(newfile, 'w') as file_object:
+        return file_object.write(list_output)
+            # ^ writes out a file using the new 'list_output' string
+    
 
 
 if __name__ == "__main__":
