@@ -49,16 +49,18 @@ def main():
     
     file = open('numbers.txt', 'r')
     file = file.read()
-    numbers = re.findall(r"[-+]?\d*\.\d+|\d+", file)
+    numbers = re.findall(r"[-+]?\d*\.\d+|\d+", file)   
         # ^ this should scan for all the integers in the file and save to a list
-   
-    sorted_array = quicksort(numbers)
+    
+    numbers = [eval(i) for i in numbers]
+    numbers = quicksort(numbers)
+    print(numbers)
         # ^ sorts the array of numbers in a list
-    list_output = ', '.join(map(str,sorted_array))
+    list_output = ', '.join(map(str,numbers))
         # ^ turns the list back into a string to write to new file
     newfile = 'sorted.txt'
     with open(newfile, 'w') as file_object:
-        return file_object.write(list_output)
+        return file_object.write(str(list_output))
             # ^ writes out a file using the new 'list_output' string
     
 
